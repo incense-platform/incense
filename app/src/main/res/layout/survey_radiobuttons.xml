@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radiobuttons"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <include
+        layout="@layout/survey_question"
+        android:id="@+id/survey_question_ref"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/b_answer1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/b_answer2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/b_answer3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/b_answer4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/b_answer5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton">
+        </RadioButton>
+    </RadioGroup>
+    <include
+        layout="@layout/survey_control"
+        android:id="@+id/survey_control_ref"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+</TableLayout>

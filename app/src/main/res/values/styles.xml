@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Variation on the Light theme that turns off the title -->
+    <style name="InCense" parent="android:style/Theme.Light.NoTitleBar">
+    </style>
+	
+	<style name="app_title" >
+		<item name="android:textSize">24sp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+    
+    <style name="big_text" >
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="survey_options" >
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="survey_question" >
+        <item name="android:textSize">32sp</item>
+        <item name="android:background">#222222</item>
+    </style>
+    <style name="nfc_confirmation" parent="android:style/Theme.NoTitleBar">
+        <!-- <item name="android:background">#00FF00</item> -->
+        <item name="android:background">#78DC78</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

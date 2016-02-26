@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InCense</string>
+    <string name="http_client_id">InCense-1.0 (Android)</string>
+    <string name="app_name_survey">InCense :: Encuesta</string>
+    <string name="activity_name_nfc">InCense :: Etiqueta NFC</string>
+    <string name="results">Results</string>
+    <string name="settings">Settings</string>
+    <string name="application_root_directory">InCense</string>
+    <string name="project_signature_filename">project_signature.json</string>
+    <string name="project_new_signature_filename">project_new_signature.json</string>
+    <string name="project_filename">project.json</string>
+    <string name="server_sink_path">/InCenseServices/UploadSensedData</string>
+    <string name="server_survey_path">/InCenseServices/UploadSensedData</string>
+    <string name="server_media_path">/InCenseServices/UploadSensedData</string>
+    <string name="server_project_signature_path">/downloads/signature</string>
+    <string name="server_project_path">/downloads/project</string>
+    <string name="results_audio_child">audio</string>
+    <string name="results_audio_extension">.raw</string>
+    <string name="results_data_child">data</string>
+    <string name="results_data_extension">.json</string>
+    <string name="results_survey_child">survey</string>
+    <string name="results_survey_extension">.json</string>
+    <string name="filequeue_max_files">1000</string>
+    <string name="filequeue_filename">results.json</string>
+    <string name="splashscreen_time">3000</string>
+    <string name="local_service_disconnected">Local service disconnected</string>
+    <string name="local_service_connected">Local service connected</string>
+    <string name="survey_max_answers">5</string>
+
+    <!-- this is a comment -->
+    <string name="new_recording">Record</string>
+    <string name="record_instructions">Press start to run the sensing process.</string>
+    <string name="session_title">Recording session</string>
+    <string name="session_active_message">Sensing and collecting data... Please wait a moment.</string>
+    <string name="session_completed_message">Recording session completed!</string>
+    <string name="session_start_completed_message">Recording session started!</string>
+    <string name="no_username_message">Please enter a username.</string>
+    <string name="alert_tags">It\'s recommended to enter at least one tag describing this moment.</string>
+
+    <!-- login & register activities -->
+    <string name="mobile_app">Mobile Application</string>
+    <string name="login_title">Login</string>
+    <string name="username_label">Username:&#160;</string>
+    <string name="username_inst">Enter username</string>
+    <string name="username_empty">Please enter your username</string>
+    <string name="password_label">Password:&#160;</string>
+    <string name="password_inst">Enter password</string>
+    <string name="password_empty">Please enter your password</string>
+    <string name="incenseid_label">InCense ID*:&#160;</string>
+    <string name="password_confirmation_label">Password confirmation: </string>
+    <string name="email_label">Email:&#160;</string>
+    <string name="device_label">Device:&#160;</string>
+    <string name="login_text">Login</string>
+    <string name="signup_text">Sign-up</string>
+    <string name="submit_label">Submit</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="required_notice">* required field</string>
+    <string name="logged_in_message">Welcome back</string>
+    <string name="incorrect_password_message">Username or password is incorrect.</string>
+    <string name="unknown_username_message">Username was not found.</string>
+    <string name="no_connection_message">No connection available.</string>
+    
+    <!-- MainActivity -->
+    <string name="unknown_username">Unknown</string>
+    <string name="start_session">Inicio de sesión</string>
+    <string name="nfctag">Etiqueta NFC encontrada: </string>
+    
+    <!-- SurveyActivity -->
+    <string name="survey_finish">Terminar</string>
+    <string name="survey_back">Atrás</string>
+    <string name="survey_skip">Saltar</string>
+    <string name="survey_next">Siguiente</string>
+    <string name="survey_provide_answer_msg">Ingrese una respuesta.</string>
+    <string name="survey_select_answer_msg">Seleccione una respuesta.</string>
+    <string name="survey_answer_all_msg">La encuesta no esta completa, por favor responda todas las preguntas."</string>
+    <string name="survey_completed">Encuesta completa!</string>
+</resources>

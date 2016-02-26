@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+   <ScrollView 
+    	android:id="@+id/scrollView"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" 
+    >
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+    >
+    <TextView android:id="@+id/dataTextView"
+			  android:layout_width="wrap_content" 
+			  android:layout_height="wrap_content"
+			  android:text="Results: " />
+	<TextView android:id="@+id/jsonTextView"
+			  android:layout_width="300dp" 
+			  android:layout_height="wrap_content"
+			  android:background="#505050"
+			  android:text="JSON content here." />
+	<LinearLayout
+    	android:orientation="horizontal"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    >
+		<Button   android:id="@+id/sendButton"
+				  android:layout_width="wrap_content" 
+				  android:layout_height="wrap_content"
+				  android:text="Send" />
+		<Button   android:id="@+id/cancelButton"
+				  android:layout_width="wrap_content" 
+				  android:layout_height="wrap_content"
+				  android:text="Cancel" />
+	</LinearLayout>
+	</LinearLayout>
+	</ScrollView>
+  
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="User data">
+        <EditTextPreference
+            android:key="editTextUsername"
+            android:title="Username"
+            android:inputType="textPersonName"
+            android:summary="Set/modify username"
+            android:defaultValue="perezg" />
+        <EditTextPreference
+            android:key="editTextPassword"
+            android:title="Password"
+            android:summary="Set/modify password"
+            android:password="true"
+            android:defaultValue="mypassword" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Sensor Selection">
+        <CheckBoxPreference
+            android:key="checkboxAccelerometer"
+            android:title="Accelerometer"
+            android:summary="Enable/disable motion recording"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="checkboxBluetooth"
+            android:title="Bluetooth"
+            android:summary="Enable/disable proximity (bluetooth) recording"
+            android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="checkboxGps"
+            android:title="GPS"
+            android:summary="Enable/disable location recording"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="checkboxAudio"
+            android:title="Microphone"
+            android:summary="Enable/disable audio recording"
+            android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="checkboxWifi"
+            android:title="WiFi"
+            android:summary="Enable/disable proximity (wifi) recording"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Server Connection">
+        <PreferenceScreen
+            android:key="screenServerConnection"
+            android:title="Server Connection"
+            android:summary="Server connection preferences">
+            <EditTextPreference
+                android:key="editTextProjectServerAddress"
+                android:title="Project server address"
+                android:summary="Set/modify a the project server address"
+                android:defaultValue="http://192.168.1.103:8080" />
+            <EditTextPreference
+                android:key="editTextDbServerAddress"
+                android:title="Database server address"
+                android:summary="Set/modify a the database server address"
+                android:defaultValue="http://urbanmoments.dyndns.org:8182" />
+            <EditTextPreference
+                android:key="editTextAppKey"
+                android:title="Application Key"
+                android:summary="Set/modify app key"
+                android:password="true"
+                android:defaultValue="myapppassword" />
+            <CheckBoxPreference
+                android:key="checkboxAutoupdate"
+                android:title="Autoupdate"
+                android:summary="Enable/disable automatic project updates"
+                android:defaultValue="true" />
+            <CheckBoxPreference
+                android:key="checkboxAutorun"
+                android:title="Autorun"
+                android:summary="Enable/disable automatic session runs"
+                android:defaultValue="true" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

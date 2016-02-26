@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="83dp"
+        android:src="@drawable/icon" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dip">
+
+        <TextView
+            android:id="@+id/textview_username_label"
+            android:text="@string/username_label"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"></TextView>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/textview_username"
+            android:text="@string/unknown_username"
+            android:textAppearance="@style/big_text"
+            android:layout_weight="1"></TextView>
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar"
+        android:visibility="invisible"
+        android:progress="0">
+    </ProgressBar>
+
+    <TextView
+        android:id="@+id/textview_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minLines="2"
+        android:layout_gravity="center"
+        android:text="@string/record_instructions"/>
+   
+    <ToggleButton
+        android:id="@+id/button_start"
+        android:textOn="OFF"
+        android:textOff="Start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ON" />
+
+</LinearLayout>

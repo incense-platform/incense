@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radiobuttons"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <include
+        layout="@layout/survey_question"
+        android:id="@+id/survey_question_ref"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <SeekBar
+        android:id="@+id/seekbar_answer"
+        android:progress="50"
+        android:layout_marginTop="10dip" />
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent">
+
+        <TextView
+            android:id="@+id/textview_option1"
+            android:textAppearance="@style/survey_options"
+            android:layout_margin="5dip"
+            android:text="Bad"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textview_option2"
+            android:textAppearance="@style/survey_options"
+            android:layout_margin="5dip"
+            android:text="Good"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true">
+        </TextView>
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/survey_control"
+        android:id="@+id/survey_control_ref"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+</TableLayout>

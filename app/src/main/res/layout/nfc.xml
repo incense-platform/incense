@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dip"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imageView1"
+            android:src="@drawable/nfclogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></ImageView>
+        <TextView
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:text="@string/nfctag"></TextView>
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="160dip"
+                android:inputType="text"
+                android:text="Not Available"
+                android:id="@+id/edittext_nfcmessage">
+            </EditText>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
