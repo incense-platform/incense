@@ -129,6 +129,11 @@ public class TaskGenerator {
         task.setJsonNode(accessPoints);
         return task;
     }
+
+    public static Task createWifiNetworkSensor(ObjectMapper mapper, long periodTime){
+        Task task = createTaskWithPeriod(mapper, "WifiNetworkSensor", TaskType.WifiNetworkSensor, periodTime);
+        return task;
+    }
     
     private static Task createTrigger(ObjectMapper mapper, String name, TaskType type, long period, String matches, ArrayList<Condition> conditions){
         Task task = createTaskWithPeriod(mapper, name, type, period);

@@ -1292,6 +1292,9 @@ public class ProjectGenerator {
         Task wifiSensor = TaskGenerator.createWifiConnectionSensor(mapper,1000, new String[] { "WifiSsid" });
         tasks.add(wifiSensor);
 
+        Task wifiNetworkSensor = TaskGenerator.createWifiNetworkSensor(mapper, 10000);
+        tasks.add(wifiNetworkSensor);
+
         									//Conditions & Triggers
         Condition ifNotConnected = TaskGenerator.createCondition(WifiConnectionSensor.ATT_ISCONNECTED,GeneralTrigger.DataType.BOOLEAN.name(),GeneralTrigger.booleanOperators[1]); // "is false"
         ArrayList<Condition> conditions = new ArrayList<Condition>();
@@ -1320,7 +1323,8 @@ public class ProjectGenerator {
                         new TaskRelation(callSensor.getName(), dataSink.getName()),
                         new TaskRelation(smsSensor.getName(), dataSink.getName()),
                         new TaskRelation(batteryStateSensor.getName(), dataSink.getName()),
-                        new TaskRelation(screenSensor.getName(), dataSink.getName())});
+                        new TaskRelation(screenSensor.getName(), dataSink.getName()),
+                        new TaskRelation(wifiNetworkSensor.getName(), dataSink.getName())});
         									//Sessions
         session.setTasks(tasks);
         session.setRelations(relations);

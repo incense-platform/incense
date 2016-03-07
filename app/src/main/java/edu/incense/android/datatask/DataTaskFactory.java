@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.hardware.SensorManager;
 import edu.incense.android.datatask.data.BatteryStateData;
+import edu.incense.android.datatask.data.WifiNetworkData;
 import edu.incense.android.datatask.filter.AccelerometerMeanFilter;
 import edu.incense.android.datatask.filter.FalseTimerFilter;
 import edu.incense.android.datatask.filter.MovementFilter;
@@ -40,6 +41,7 @@ import edu.incense.android.sensor.SmsSensor;
 import edu.incense.android.sensor.SurveySensor;
 import edu.incense.android.sensor.TimerSensor;
 import edu.incense.android.sensor.WifiConnectionSensor;
+import edu.incense.android.sensor.WifiNetworkSensor;
 import edu.incense.android.sensor.WifiScanSensor;
 
 public class DataTaskFactory {
@@ -156,6 +158,11 @@ public class DataTaskFactory {
             break;
         case AccelerometerMeanFilter:
             dataTask = new AccelerometerMeanFilter();
+            break;
+        case WifiNetworkSensor:
+            WifiNetworkSensor wns = new WifiNetworkSensor(context);
+            wns.setPeriodTime(task.getPeriodTime());
+            dataTask = new DataSource(wns);
             break;
         case StepsAccFilter:
             dataTask = new AccelerometerMeanFilter();

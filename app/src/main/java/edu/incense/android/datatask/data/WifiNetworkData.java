@@ -30,11 +30,13 @@ public class WifiNetworkData extends Data{
 
     private List<WifiNetworkItem> wifiNetworks;
 
+    // Creates a new instance of the WifiNetworkData class.
     public WifiNetworkData(){
         super(DataType.WIFI);
         wifiNetworks = new LinkedList<WifiNetworkItem>();
     }
 
+    // Creates a nre instance of the WifiNetworkData class and adds a WifiNetworkItem to its list.
     public WifiNetworkData(ScanResult scanResult){
         super(DataType.WIFI);
         wifiNetworks = new LinkedList<WifiNetworkItem>();
@@ -43,8 +45,13 @@ public class WifiNetworkData extends Data{
         wifiNetworks.add(newItem);
     }
 
+    // Adds an item to the list of detected networks.
     public void addWifiNetworkItem(ScanResult scanResult){
         WifiNetworkItem newItem = new WifiNetworkItem(scanResult);
         wifiNetworks.add(newItem);
+    }
+
+    public List<WifiNetworkItem> getWifiNetworks(){
+        return this.wifiNetworks;
     }
 }
