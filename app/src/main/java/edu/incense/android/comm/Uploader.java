@@ -34,7 +34,7 @@ public class Uploader extends Connection {
         SharedPreferences sp = PreferenceManager
                 .getDefaultSharedPreferences(context);
         serverDbAddress = sp.getString("editTextDbServerAddress",
-                "http://192.168.1.103:8080");
+                "http://10.2.23.165:8080");
     }
 
     @Override

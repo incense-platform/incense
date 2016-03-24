@@ -1289,26 +1289,34 @@ public class ProjectGenerator {
         gpsSensor.setTriggered(true);
         tasks.add(gpsSensor);
         //
-        Task wifiSensor = TaskGenerator.createWifiConnectionSensor(mapper,1000, new String[] { "WifiSsid" });
+        Task wifiSensor = TaskGenerator.createWifiConnectionSensor(mapper, 1000, new String[]{"WifiSsid"});
         tasks.add(wifiSensor);
 
         Task wifiNetworkSensor = TaskGenerator.createWifiNetworkSensor(mapper, 10000);
         tasks.add(wifiNetworkSensor);
 
         									//Conditions & Triggers
-        Condition ifNotConnected = TaskGenerator.createCondition(WifiConnectionSensor.ATT_ISCONNECTED,GeneralTrigger.DataType.BOOLEAN.name(),GeneralTrigger.booleanOperators[1]); // "is false"
+        Condition ifNotConnected = TaskGenerator.createCondition(WifiConnectionSensor.ATT_ISCONNECTED, GeneralTrigger.DataType.BOOLEAN.name(), GeneralTrigger.booleanOperators[1]); // "is false"
         ArrayList<Condition> conditions = new ArrayList<Condition>();
         conditions.add(ifNotConnected);
         //
-        Task gpsTrigger = TaskGenerator.createTrigger(mapper, "GpsTrigger",1000, GeneralTrigger.matches[0], conditions);
+        Task gpsTrigger = TaskGenerator.createTrigger(mapper, "GpsTrigger", 1000, GeneralTrigger.matches[0], conditions);
         tasks.add(gpsTrigger);
         //
-        Condition ifConnected = TaskGenerator.createCondition(WifiConnectionSensor.ATT_ISCONNECTED,GeneralTrigger.DataType.BOOLEAN.name(),GeneralTrigger.booleanOperators[0]); // "is true"
+        Condition ifConnected = TaskGenerator.createCondition(WifiConnectionSensor.ATT_ISCONNECTED, GeneralTrigger.DataType.BOOLEAN.name(), GeneralTrigger.booleanOperators[0]); // "is true"
         conditions = new ArrayList<Condition>();
         conditions.add(ifConnected);
         //
-        Task gpsStopTrigger = TaskGenerator.createStopTrigger(mapper,"GpsStopTrigger", 1000, GeneralTrigger.matches[0], conditions);
-        tasks.add(gpsStopTrigger);               
+        Task gpsStopTrigger = TaskGenerator.createStopTrigger(mapper, "GpsStopTrigger", 1000, GeneralTrigger.matches[0], conditions);
+        tasks.add(gpsStopTrigger);
+
+        // Components or filters
+        Task wifiCountTask = TaskGenerator.CreateDataFilter(mapper, "WifiNetworkCount1", "WifiNetworksQuantityFoundFilter");
+        tasks.add(wifiCountTask);
+
+        Task wifiCountTask1 = TaskGenerator.CreateDataFilter(mapper, "WifiNetworkCount2", "WifiNetworksQuantityFoundFilter");
+        tasks.add(wifiCountTask1);
+
         									// Sink        
         Task dataSink = TaskGenerator.createDataSink(mapper, 60);
         tasks.add(dataSink);
@@ -1324,7 +1332,10 @@ public class ProjectGenerator {
                         new TaskRelation(smsSensor.getName(), dataSink.getName()),
                         new TaskRelation(batteryStateSensor.getName(), dataSink.getName()),
                         new TaskRelation(screenSensor.getName(), dataSink.getName()),
-                        new TaskRelation(wifiNetworkSensor.getName(), dataSink.getName())});
+                        new TaskRelation(wifiNetworkSensor.getName(), wifiCountTask.getName()),
+                        new TaskRelation(wifiNetworkSensor.getName(), wifiCountTask1.getName()),
+                        new TaskRelation(wifiCountTask.getName(), dataSink.getName()),
+                        new TaskRelation(wifiCountTask1.getName(), dataSink.getName())});
         									//Sessions
         session.setTasks(tasks);
         session.setRelations(relations);

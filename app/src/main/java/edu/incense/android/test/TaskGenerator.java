@@ -210,6 +210,12 @@ public class TaskGenerator {
         task.setJsonNode(extrasNode);
         return task;
     }
+
+    public static Task CreateDataFilter(ObjectMapper mapper, String taskName, String componentName){
+        Task task = TaskGenerator.createTaskWithPeriod(mapper, taskName, TaskType.DataFilter, 1);
+        task.setComponentName(componentName);
+        return task;
+    }
     
     public static Task createDataSink(ObjectMapper mapper, int bufferSize){
         Task task = TaskGenerator.createTaskWithPeriod(mapper, "DataSink",

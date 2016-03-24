@@ -37,6 +37,6 @@ public enum TaskType {
     BatteryStateSensor,
     SmsSensor,
     ScreenSensor,
-    WifiNetworkSensor
-    
+    WifiNetworkSensor,
+    DataFilter
 }

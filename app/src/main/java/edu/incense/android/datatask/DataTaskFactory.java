@@ -8,6 +8,7 @@ import edu.incense.android.datatask.data.BatteryStateData;
 import edu.incense.android.datatask.data.WifiNetworkData;
 import edu.incense.android.datatask.filter.AccelerometerMeanFilter;
 import edu.incense.android.datatask.filter.FalseTimerFilter;
+import edu.incense.android.datatask.filter.Loader.ComponentLoader;
 import edu.incense.android.datatask.filter.MovementFilter;
 import edu.incense.android.datatask.filter.MovementTimeFilter;
 import edu.incense.android.datatask.filter.ShakeFilter;
@@ -223,6 +224,10 @@ public class DataTaskFactory {
             List<Condition> conditionsList2 = jsonTrigger2.toConditions(task
                     .getJsonNode());
             dataTask = new StopTrigger(context, conditionsList2, matches2);
+            break;
+        case DataFilter:
+            ComponentLoader cl = new ComponentLoader(context, task.getComponentName());
+            dataTask = cl.createInstanceOfComponent();
             break;
         default:
             return null;

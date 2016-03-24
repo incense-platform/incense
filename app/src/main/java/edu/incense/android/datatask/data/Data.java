@@ -5,11 +5,26 @@ import android.os.Bundle;
 public abstract class Data {// implements Comparable<Data> {
     private long timestamp;
     private DataType dataType = DataType.NULL;
+    // This is used only when the data type managed by this class is defined outside this project.
+    // Is set to null when data type is defined in this project.
+    private String customDataName;
     private Bundle extras;
 
     public Data(DataType dataType) {
         setTimestamp(System.currentTimeMillis());
         setDataType(dataType);
+        setCustomDataName(null);
+    }
+
+    /**
+     * This constructor is used by subclases of data that are defined outside this project, like
+     * when components are defined and custom data is sent in and out of the component.
+     * @param customDataName The name of the custom data.
+     */
+    public Data(String customDataName){
+        setTimestamp(System.currentTimeMillis());
+        setDataType(dataType.CUSTOM);
+        setCustomDataName(customDataName);
     }
 
     public DataType getDataType() {
@@ -26,6 +41,22 @@ public abstract class Data {// implements Comparable<Data> {
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+    /**
+     * Returns the custom name of this data type.
+     * @return
+     */
+    public String getCustomDataName(){
+        return this.customDataName;
+    }
+
+    /**
+     * Sets the custom name for this data type. This must not be changed once set on the constructor.
+     * @param customDataName
+     */
+    private void setCustomDataName(String customDataName){
+        this.customDataName = customDataName;
     }
 
     /**
