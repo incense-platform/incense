@@ -16,6 +16,7 @@ public class Downloader extends Connection {
     private String serverProjectAddress;
     private String serverProjectPath;
     private String serverProjectConfigPath;
+    private String componentGeneratorPath;
 
     public Downloader(Context context) {
         super(context);
@@ -25,7 +26,7 @@ public class Downloader extends Connection {
         SharedPreferences sp = PreferenceManager
                 .getDefaultSharedPreferences(context);
         serverProjectAddress = sp.getString("editTextProjectServerAddress",
-                "http://urbanmoments.dyndns.org:8182");
+                "http://incense.itson.edu.mx");
     }
 
     @Override
@@ -35,6 +36,7 @@ public class Downloader extends Connection {
                 R.string.server_project_signature_path);
         serverProjectConfigPath = context.getResources().getString(
                 R.string.server_project_path);
+        componentGeneratorPath = "/componentgenerator";
     }
 
     public boolean getProjectDataTo(String filePath) {
@@ -49,6 +51,13 @@ public class Downloader extends Connection {
                 ConnectionType.INPUT, JSON_TYPE))
             return false;
         return getData(filePath, false);
+    }
+
+    public boolean getComponent(String componentID, String campaignID, String fileSavePath){
+        if (!setupHttpRequest(serverProjectAddress + componentGeneratorPath + "/" + componentID +
+                "/" + campaignID, ConnectionType.INPUT, ""))
+            return false;
+        return getData(fileSavePath, false);
     }
     
     // GET implemented with HttpURLConnection
@@ -66,14 +75,13 @@ public class Downloader extends Connection {
             if (!isResource) {
                 File parent = new File(Environment.getExternalStorageDirectory(), parentDirectory);
                 parent.mkdirs();
-                File file = new File(parent, filePath);
+                File file = new File(filePath);
                 fos = new FileOutputStream(file);
             } else {
                 fos = context.openFileOutput(filePath, 0);
             }
 
-            DataInputStream dis = new DataInputStream(
-                    connection.getInputStream());
+            DataInputStream dis = new DataInputStream(connection.getInputStream());
 
             // GET
             // Read bytes until EOF to write

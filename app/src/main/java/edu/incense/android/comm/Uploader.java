@@ -34,7 +34,7 @@ public class Uploader extends Connection {
         SharedPreferences sp = PreferenceManager
                 .getDefaultSharedPreferences(context);
         serverDbAddress = sp.getString("editTextDbServerAddress",
-                "http://10.2.23.165:8080");
+                "http://incense.itson.edu.mx");
     }
 
     @Override
@@ -120,14 +120,14 @@ public class Uploader extends Connection {
             dos.writeBytes(mLineEnd);
             dos.writeBytes(mTwoHyphens + mBoundary + mTwoHyphens + mLineEnd);
 
-            // Responses from the server (code and message)
-            int serverResponseCode = connection.getResponseCode();
-            String serverResponseMessage = connection.getResponseMessage();
-
             // Close streams
             dos.flush();
             dos.close();
             fis.close();
+
+            // Responses from the server (code and message)
+            int serverResponseCode = connection.getResponseCode();
+            String serverResponseMessage = connection.getResponseMessage();
 
             if (serverResponseCode != HttpURLConnection.HTTP_OK)
                 throw new Exception(serverResponseMessage);

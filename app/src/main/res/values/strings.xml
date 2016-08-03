@@ -10,9 +10,9 @@
     <string name="project_signature_filename">project_signature.json</string>
     <string name="project_new_signature_filename">project_new_signature.json</string>
     <string name="project_filename">project.json</string>
-    <string name="server_sink_path">/InCenseServices/UploadSensedData</string>
-    <string name="server_survey_path">/InCenseServices/UploadSensedData</string>
-    <string name="server_media_path">/InCenseServices/UploadSensedData</string>
+    <string name="server_sink_path">/UploadSensedData</string>
+    <string name="server_survey_path">/UploadSensedData</string>
+    <string name="server_media_path">/UploadSensedData</string>
     <string name="server_project_signature_path">/downloads/signature</string>
     <string name="server_project_path">/downloads/project</string>
     <string name="results_audio_child">audio</string>

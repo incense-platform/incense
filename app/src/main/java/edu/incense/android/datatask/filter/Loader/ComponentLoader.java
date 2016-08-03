@@ -1,6 +1,7 @@
 package edu.incense.android.datatask.filter.Loader;
 
 // InCense references.
+import edu.incense.android.comm.Downloader;
 import edu.incense.android.datatask.filter.DataFilter;
 import edu.incense.android.datatask.data.Data;
 
@@ -25,6 +26,8 @@ public class ComponentLoader {
 
     // Fields
     private String componentName;
+    private String componentID;
+    private String campaignID;
     private Context context;
     private File incenseDir;
 
@@ -32,12 +35,30 @@ public class ComponentLoader {
         return this.componentName;
     }
 
-    public void setComponentName(String componentName){
+    public void setComponentName(String componentName, String componentID, String campaignID){
         this.componentName = componentName;
     }
 
-    public ComponentLoader(Context context, String componentName){
+    public String getComponentID() {
+        return componentID;
+    }
+
+    public void setComponentID(String componentID) {
+        this.componentID = componentID;
+    }
+
+    public String getCampaignID() {
+        return campaignID;
+    }
+
+    public void setCampaignID(String campaignID) {
+        this.campaignID = campaignID;
+    }
+
+    public ComponentLoader(Context context, String componentName, String componentID, String campaignID){
         this.componentName = componentName;
+        this.componentID = componentID;
+        this.campaignID = campaignID;
         this.context = context;
         this.incenseDir = context.getFilesDir();
     }
@@ -49,9 +70,7 @@ public class ComponentLoader {
      */
     public DataFilter createInstanceOfComponent(){
         File component = getComponentFile();
-        if (component == null){
-            // Try to get component from repository.
-        }
+        
 
         DexClassLoader dcl = new DexClassLoader(component.getAbsolutePath(), this.incenseDir +
                 "/" + COMPONENTS_DEX_FOLDER, null, this.getClass().getClassLoader());
@@ -87,6 +106,11 @@ public class ComponentLoader {
 
         if (componentFile.exists())
             return componentFile;
+        else{
+            Downloader d = new Downloader(this.context);
+            if (d.getComponent(this.componentID, this.campaignID, componentFile.getPath()))
+                return componentFile;
+        }
 
         return null;
     }

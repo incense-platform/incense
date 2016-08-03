@@ -226,7 +226,8 @@ public class DataTaskFactory {
             dataTask = new StopTrigger(context, conditionsList2, matches2);
             break;
         case DataFilter:
-            ComponentLoader cl = new ComponentLoader(context, task.getComponentName());
+            ComponentLoader cl = new ComponentLoader(context, task.getComponentName(),
+                    task.getComponentID(), task.getCampaignID());
             dataTask = cl.createInstanceOfComponent();
             break;
         default:

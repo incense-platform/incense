@@ -11,8 +11,10 @@ public class Task {
     private long periodTime;
     private boolean triggered;
     private JsonNode jsonNode;
-    // This field is used if the task is of type DataFilter, meaning it is using a donwloaded component.
+    // These field is used if the task is of type DataFilter, meaning it is using a downloaded component.
     private String componentName;
+    private String componentID;
+    private String campaignID;
 
     public Task() {
         taskType = TaskType.NULL;
@@ -59,6 +61,23 @@ public class Task {
     public void setComponentName(String componentName){
         this.componentName = componentName;
     }
+
+    public String getComponentID() {
+        return componentID;
+    }
+
+    public void setComponentID(String componentID) {
+        this.componentID = componentID;
+    }
+
+    public String getCampaignID() {
+        return campaignID;
+    }
+
+    public void setCampaignID(String campaignID) {
+        this.campaignID = campaignID;
+    }
+
     public boolean getBoolean(String key, boolean defValue) {
         if (jsonNode == null)
             return defValue;

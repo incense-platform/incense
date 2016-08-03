@@ -80,7 +80,9 @@ public abstract class Connection {
             connection.setRequestProperty("User-Agent", httpClientId);
             //connection.setRequestProperty("Content-Type", contentType);
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + mBoundary);
+
+            if (connectionType == ConnectionType.OUTPUT)
+                connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + mBoundary);
 
 
             // Establish connection

@@ -211,9 +211,12 @@ public class TaskGenerator {
         return task;
     }
 
-    public static Task CreateDataFilter(ObjectMapper mapper, String taskName, String componentName){
+    public static Task CreateDataFilter(ObjectMapper mapper, String taskName, String componentName,
+                                        String componentID, String campaignID){
         Task task = TaskGenerator.createTaskWithPeriod(mapper, taskName, TaskType.DataFilter, 1);
         task.setComponentName(componentName);
+        task.setComponentID(componentID);
+        task.setCampaignID(campaignID);
         return task;
     }
     

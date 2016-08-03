@@ -1311,10 +1311,12 @@ public class ProjectGenerator {
         tasks.add(gpsStopTrigger);
 
         // Components or filters
-        Task wifiCountTask = TaskGenerator.CreateDataFilter(mapper, "WifiNetworkCount1", "WifiNetworksQuantityFoundFilter");
+        Task wifiCountTask = TaskGenerator.CreateDataFilter(mapper, "WifiNetworkCount1",
+                "WifiNetworksQuantityFoundFilter_1", "1", "1");
         tasks.add(wifiCountTask);
 
-        Task wifiCountTask1 = TaskGenerator.CreateDataFilter(mapper, "WifiNetworkCount2", "WifiNetworksQuantityFoundFilter");
+        Task wifiCountTask1 = TaskGenerator.CreateDataFilter(mapper, "WifiNetworkCount2",
+                "WifiNetworksQuantityFoundFilter_1", "1", "1");
         tasks.add(wifiCountTask1);
 
         									// Sink        
