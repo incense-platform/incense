@@ -11,7 +11,7 @@ public class Task {
     private long periodTime;
     private boolean triggered;
     private JsonNode jsonNode;
-    // These field is used if the task is of type DataFilter, meaning it is using a downloaded component.
+    // These fields is used if the task is of type DataFilter, meaning it is using a downloaded component.
     private String componentName;
     private String componentID;
     private String campaignID;

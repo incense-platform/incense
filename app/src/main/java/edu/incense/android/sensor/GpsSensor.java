@@ -1,5 +1,6 @@
 package edu.incense.android.sensor;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -142,11 +143,15 @@ public class GpsSensor extends Sensor {
             if (intentAction.equalsIgnoreCase(LOCATION_UPDATE_ACTION)) {
                 Location location = intent
                         .getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-                GpsData newData = new GpsData(location);
+                GpsData newData = null;
+                if (location != null)
+                    newData = new GpsData(location);
                 currentData = newData;
-                Log.i(TAG, "New location: " + location.toString());
-                Log.i(TAG, "With provider: " + location.getProvider());
-                lastLocationTime = newData.getTimestamp();
+                if (location != null) {
+                    Log.i(TAG, "New location: " + location.toString());
+                    Log.i(TAG, "With provider: " + location.getProvider());
+                    lastLocationTime = newData.getTimestamp();
+                }
             }
 
         }

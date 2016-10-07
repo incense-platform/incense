@@ -70,7 +70,6 @@ public class ComponentLoader {
      */
     public DataFilter createInstanceOfComponent(){
         File component = getComponentFile();
-        
 
         DexClassLoader dcl = new DexClassLoader(component.getAbsolutePath(), this.incenseDir +
                 "/" + COMPONENTS_DEX_FOLDER, null, this.getClass().getClassLoader());

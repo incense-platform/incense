@@ -1323,21 +1323,21 @@ public class ProjectGenerator {
         Task dataSink = TaskGenerator.createDataSink(mapper, 60);
         tasks.add(dataSink);
         									//Relations
-        List<TaskRelation> relations = Arrays.asList(new TaskRelation[] {
-                        new TaskRelation(wifiSensor.getName(), gpsTrigger.getName()),
-                        new TaskRelation(gpsTrigger.getName(), gpsSensor.getName()),
-                        new TaskRelation(wifiSensor.getName(), gpsStopTrigger.getName()),
-                        new TaskRelation(gpsStopTrigger.getName(), gpsSensor.getName()),
-                        new TaskRelation(wifiSensor.getName(), dataSink.getName()),
-                        new TaskRelation(gpsSensor.getName(), dataSink.getName()),  
-                        new TaskRelation(callSensor.getName(), dataSink.getName()),
-                        new TaskRelation(smsSensor.getName(), dataSink.getName()),
-                        new TaskRelation(batteryStateSensor.getName(), dataSink.getName()),
-                        new TaskRelation(screenSensor.getName(), dataSink.getName()),
-                        new TaskRelation(wifiNetworkSensor.getName(), wifiCountTask.getName()),
-                        new TaskRelation(wifiNetworkSensor.getName(), wifiCountTask1.getName()),
-                        new TaskRelation(wifiCountTask.getName(), dataSink.getName()),
-                        new TaskRelation(wifiCountTask1.getName(), dataSink.getName())});
+        List<TaskRelation> relations = Arrays.asList(new TaskRelation[]{
+                new TaskRelation(wifiSensor.getName(), gpsTrigger.getName()),
+                new TaskRelation(gpsTrigger.getName(), gpsSensor.getName()),
+                new TaskRelation(wifiSensor.getName(), gpsStopTrigger.getName()),
+                new TaskRelation(gpsStopTrigger.getName(), gpsSensor.getName()),
+                new TaskRelation(wifiSensor.getName(), dataSink.getName()),
+                new TaskRelation(gpsSensor.getName(), dataSink.getName()),
+                new TaskRelation(callSensor.getName(), dataSink.getName()),
+                new TaskRelation(smsSensor.getName(), dataSink.getName()),
+                new TaskRelation(batteryStateSensor.getName(), dataSink.getName()),
+                new TaskRelation(screenSensor.getName(), dataSink.getName()),
+                new TaskRelation(wifiNetworkSensor.getName(), wifiCountTask.getName()),
+                new TaskRelation(wifiNetworkSensor.getName(), wifiCountTask1.getName()),
+                new TaskRelation(wifiCountTask.getName(), dataSink.getName()),
+                new TaskRelation(wifiCountTask1.getName(), dataSink.getName())});
         									//Sessions
         session.setTasks(tasks);
         session.setRelations(relations);
@@ -1896,14 +1896,14 @@ public class ProjectGenerator {
                 "AudioSink", TaskType.AudioSink, 1000);
         tasks.add(audioSink);
 
-        List<TaskRelation> relations = Arrays.asList(new TaskRelation[] {
+        List<TaskRelation> relations = Arrays.asList(new TaskRelation[]{
                 new TaskRelation(nfcSensor.getName(), surveyTrigger.getName()),
                 new TaskRelation(nfcSensor.getName(), dataSink.getName()),
                 new TaskRelation(surveyTrigger.getName(), "mainSurvey"),
                 new TaskRelation(surveySensor.getName(), audioTrigger.getName()),
                 new TaskRelation(audioTrigger.getName(), audioSensor.getName()),
                 new TaskRelation(audioSensor.getName(), audioSink.getName()),
-                });
+        });
 
         session.setTasks(tasks);
         session.setRelations(relations);
@@ -1965,6 +1965,90 @@ public class ProjectGenerator {
         project.put("mainSession", session);
         project.setSurveysSize(0);
         // project.put("mainSurvey", survey);
+
+        writeProject(context, mapper, project);
+    }
+
+    public static void buildProjectJsonEval(Context context) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Session
+        Session session = new Session();
+        session.setDurationUnits(24L * 10L); // 10days
+        session.setDurationMeasure("hours");
+        // TaskList
+        List<Task> tasks = new ArrayList<Task>();
+        // Sensors
+
+        Task accelerometerTask = TaskGenerator.createAccelerometerSensor(mapper, 5, 1000, 500);
+        tasks.add(accelerometerTask);
+
+        Task gpsTask = TaskGenerator.createGpsSensor(mapper, 1000);
+        tasks.add(gpsTask);
+
+        Task activityCountTask = TaskGenerator.CreateDataFilter(mapper, "ActivityCount",
+                "ActivityCountFilter_9", "9", "1");
+        tasks.add(activityCountTask);
+
+        Task userLocationTask = TaskGenerator.CreateDataFilter(mapper, "UserLocation",
+                "UserLocationFilter_10", "10", "1");
+        tasks.add(userLocationTask);
+
+        Task activityCountSink = TaskGenerator.createDataSink(mapper, 60);
+        tasks.add(activityCountSink);
+
+        Task locationSink = TaskGenerator.createDataSink(mapper, 60);
+        tasks.add(locationSink);
+
+        List<TaskRelation> relations = Arrays.asList(new TaskRelation[]{
+                new TaskRelation(accelerometerTask.getName(), activityCountTask.getName()),
+                new TaskRelation(activityCountTask.getName(), activityCountSink.getName()),
+                new TaskRelation(gpsTask.getName(), userLocationTask.getName()),
+                new TaskRelation(userLocationTask.getName(), locationSink.getName())});
+
+        session.setTasks(tasks);
+        session.setRelations(relations);
+        //Project
+        Project project = new Project();
+        project.setSessionsSize(1);
+        project.put("mainSession", session);
+        project.setSurveysSize(0);
+
+        writeProject(context, mapper, project);
+    }
+
+    public static void buildProjectJsonEvalStudents(Context context) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Session
+        Session session = new Session();
+        session.setDurationUnits(24L * 10L); // 10days
+        session.setDurationMeasure("hours");
+        // TaskList
+        List<Task> tasks = new ArrayList<Task>();
+        // Sensors
+
+        Task gpsTask = TaskGenerator.createGpsSensor(mapper, 1000);
+        tasks.add(gpsTask);
+
+        Task userLocationTask = TaskGenerator.CreateDataFilter(mapper, "UserLocation",
+                "JAMA_15", "15", "1");
+        tasks.add(userLocationTask);
+
+        Task locationSink = TaskGenerator.createDataSink(mapper, 60);
+        tasks.add(locationSink);
+
+        List<TaskRelation> relations = Arrays.asList(new TaskRelation[]{
+                new TaskRelation(gpsTask.getName(), userLocationTask.getName()),
+                new TaskRelation(userLocationTask.getName(), locationSink.getName())});
+
+        session.setTasks(tasks);
+        session.setRelations(relations);
+        //Project
+        Project project = new Project();
+        project.setSessionsSize(1);
+        project.put("mainSession", session);
+        project.setSurveysSize(0);
 
         writeProject(context, mapper, project);
     }

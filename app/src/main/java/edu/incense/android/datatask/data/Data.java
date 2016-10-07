@@ -1,13 +1,16 @@
 package edu.incense.android.datatask.data;
 
 import android.os.Bundle;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 public abstract class Data {// implements Comparable<Data> {
+    @JsonIgnore
     private long timestamp;
     private DataType dataType = DataType.NULL;
     // This is used only when the data type managed by this class is defined outside this project.
     // Is set to null when data type is defined in this project.
     private String customDataName;
+    @JsonIgnore
     private Bundle extras;
 
     public Data(DataType dataType) {
@@ -39,6 +42,7 @@ public abstract class Data {// implements Comparable<Data> {
         timestamp = time;
     }
 
+    @JsonIgnore
     public long getTimestamp() {
         return timestamp;
     }
@@ -69,6 +73,7 @@ public abstract class Data {// implements Comparable<Data> {
     /**
      * @return the bundle
      */
+    @JsonIgnore
     public Bundle getExtras() {
         if(extras == null){
             extras = new Bundle();
