@@ -32,6 +32,7 @@ import edu.incense.android.sensor.BluetoothConnectionSensor;
 import edu.incense.android.sensor.BluetoothSensor;
 import edu.incense.android.sensor.CallSensor;
 import edu.incense.android.sensor.GpsSensor;
+import edu.incense.android.sensor.GyroscopeSensor;
 import edu.incense.android.sensor.NfcSensor;
 import edu.incense.android.sensor.PhoneCallSensor;
 import edu.incense.android.sensor.PhoneStateSensor;
@@ -44,6 +45,7 @@ import edu.incense.android.sensor.TimerSensor;
 import edu.incense.android.sensor.WifiConnectionSensor;
 import edu.incense.android.sensor.WifiNetworkSensor;
 import edu.incense.android.sensor.WifiScanSensor;
+import edu.incense.android.sensor.OrientationSensor;
 
 public class DataTaskFactory {
     public static DataTask createDataTask(Task task, Context context) {
@@ -107,20 +109,30 @@ public class DataTaskFactory {
             dataTask = new DataSource(new GpsSensor(context));
             break;
         case GyroscopeSensor:
-            long frameTime_gs = task.getLong(
-                    AccelerometerSensor.ATT_FRAMETIME, 1000);
-            int sensorDelay_gs = task.getInt(AccelerometerSensor.ATT_SENSOR_DELAY,
-                    SensorManager.SENSOR_DELAY_GAME);
-            Sensor sensor_gs = AccelerometerSensor.createGyroscope(
-                    context, frameTime_gs, sensorDelay_gs);
-            if (task.getSampleFrequency() > 0) {
-                sensor_gs.setSampleFrequency(task.getSampleFrequency());
-            } else if (task.getPeriodTime() > 0) {
-                sensor_gs.setPeriodTime(task.getPeriodTime());
+//            long frameTime_gs = task.getLong(
+//                    AccelerometerSensor.ATT_FRAMETIME, 1000);
+//            int sensorDelay_gs = task.getInt(AccelerometerSensor.ATT_SENSOR_DELAY,
+//                    SensorManager.SENSOR_DELAY_GAME);
+//            Sensor sensor_gs = AccelerometerSensor.createGyroscope(
+//                    context, frameTime_gs, sensorDelay_gs);
+//            if (task.getSampleFrequency() > 0) {
+//                sensor_gs.setSampleFrequency(task.getSampleFrequency());
+//            } else if (task.getPeriodTime() > 0) {
+//                sensor_gs.setPeriodTime(task.getPeriodTime());
+//            }
+//            dataTask = new DataSource(sensor_gs);
+//            task.setPeriodTime(frameTime_gs);
+//            task.setSampleFrequency(-1.0f);
+            dataTask = new DataSource(GyroscopeSensor.createGyroscope(context));
+            if (task.getSampleFrequency() > 0){
+                dataTask.setSampleFrequency(task.getSampleFrequency());
             }
-            dataTask = new DataSource(sensor_gs);
-            task.setPeriodTime(frameTime_gs);
-            task.setSampleFrequency(-1.0f);
+            break;
+        case OrientationSensor:
+            dataTask = new DataSource(new OrientationSensor(context));
+            if (task.getSampleFrequency() > 0){
+                dataTask.setSampleFrequency(task.getSampleFrequency());
+            }
             break;
         case CallSensor:
             dataTask = new DataSource(new CallSensor(context));

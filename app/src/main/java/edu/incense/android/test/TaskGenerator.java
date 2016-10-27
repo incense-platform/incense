@@ -118,6 +118,15 @@ public class TaskGenerator {
         task.setJsonNode(extrasNode);
         return task;
     }
+
+    public static Task createGyroscopeSensor(ObjectMapper mapper, int sampleFrequency){
+        Task task = TaskGenerator.createTask(mapper, "Gyroscope", TaskType.GyroscopeSensor, sampleFrequency);
+        return task;
+    }
+
+    public static Task createOrientationSensor(ObjectMapper mapper, int sampleFrequency){
+        return TaskGenerator.createTask(mapper, "Orientation", TaskType.OrientationSensor, sampleFrequency);
+    }
     
     public static Task createWifiConnectionSensor(ObjectMapper mapper, long period, String[] ap){
         Task task = TaskGenerator.createTaskWithPeriod(mapper, "WifiConnectionSensor", TaskType.WifiConnectionSensor, period);

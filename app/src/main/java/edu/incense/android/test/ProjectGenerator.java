@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import android.content.Context;
+import android.hardware.SensorManager;
 import android.os.Environment;
 import android.text.format.Time;
 import edu.incense.android.R;
@@ -1954,7 +1955,7 @@ public class ProjectGenerator {
                                 .getName()),
                         new TaskRelation(stepCounterFilter.getName(),
                                 dataSink.getName()),
-                       
+
                 });
 
         session.setTasks(tasks);
@@ -2015,6 +2016,45 @@ public class ProjectGenerator {
         project.setSurveysSize(0);
 
         writeProject(context, mapper, project);
+    }
+
+    public static void buildProjectJsonEvalAccel(Context context){
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Session
+        Session session = new Session();
+        session.setDurationUnits(24L * 10L); // 10days
+        session.setDurationMeasure("hours");
+        // TaskList
+        List<Task> tasks = new ArrayList<Task>();
+        // Sensors
+
+        Task gyroscopeTask = TaskGenerator.createGyroscopeSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(gyroscopeTask);
+
+        Task orientationTask = TaskGenerator.createOrientationSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(orientationTask);
+
+        Task gyrosSink = TaskGenerator.createDataSink(mapper, 60);
+        tasks.add(gyrosSink);
+
+//        Task orientSink = TaskGenerator.createDataSink(mapper, 60);
+//        tasks.add(orientSink);
+
+        List<TaskRelation> relations = Arrays.asList(new TaskRelation[]{
+                new TaskRelation(gyroscopeTask.getName(), gyrosSink.getName()),
+                new TaskRelation(orientationTask.getName(), gyrosSink.getName())});
+
+        session.setTasks(tasks);
+        session.setRelations(relations);
+        //Project
+        Project project = new Project();
+        project.setSessionsSize(1);
+        project.put("mainSession", session);
+        project.setSurveysSize(0);
+
+        writeProject(context, mapper, project);
+
     }
 
     public static void buildProjectJsonEvalStudents(Context context) {
