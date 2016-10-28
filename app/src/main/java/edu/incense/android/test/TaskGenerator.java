@@ -119,6 +119,16 @@ public class TaskGenerator {
         return task;
     }
 
+    public static Task createBareAccelerometerSensor(ObjectMapper mapper, int sampleFrequency){
+        Task task = TaskGenerator.createTask(mapper, "BareAccelerometerSensor", TaskType.BareAccelerometerSensor, sampleFrequency);
+        return task;
+    }
+
+    public static Task createImuSensor(ObjectMapper mapper, int sampleFrequency){
+        Task task = TaskGenerator.createTask(mapper, "ImuSensor", TaskType.ImuSensor, sampleFrequency);
+        return task;
+    }
+
     public static Task createGyroscopeSensor(ObjectMapper mapper, int sampleFrequency){
         Task task = TaskGenerator.createTask(mapper, "Gyroscope", TaskType.GyroscopeSensor, sampleFrequency);
         return task;

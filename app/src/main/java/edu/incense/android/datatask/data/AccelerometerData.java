@@ -1,5 +1,8 @@
 package edu.incense.android.datatask.data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AccelerometerData extends Data {
     private double axisX;
     private double axisY;
@@ -42,6 +45,15 @@ public class AccelerometerData extends Data {
     
     public void setTimestamp(long timestamp){
         super.setTimestamp(timestamp);
+    }
+
+    /**
+     * Return the date and time the data contained by this class was generated.
+     *
+     * @return: The date and time as string in YYYY-MM-DD HH:MM:SS format.
+     */
+    public String getDataDateTime() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(super.getTimestamp()));
     }
 
     /*

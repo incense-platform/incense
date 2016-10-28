@@ -25,6 +25,7 @@ import edu.incense.android.datatask.trigger.StopTrigger;
 import edu.incense.android.datatask.trigger.SurveyTrigger;
 import edu.incense.android.sensor.AccelerometerSensor;
 import edu.incense.android.sensor.AccelerometerSensor_old;
+import edu.incense.android.sensor.BareAccelerometerSensor;
 import edu.incense.android.sensor.AudioSensor;
 import edu.incense.android.sensor.BatteryLevelSensor;
 import edu.incense.android.sensor.BatteryStateSensor;
@@ -33,6 +34,7 @@ import edu.incense.android.sensor.BluetoothSensor;
 import edu.incense.android.sensor.CallSensor;
 import edu.incense.android.sensor.GpsSensor;
 import edu.incense.android.sensor.GyroscopeSensor;
+import edu.incense.android.sensor.ImuSensor;
 import edu.incense.android.sensor.NfcSensor;
 import edu.incense.android.sensor.PhoneCallSensor;
 import edu.incense.android.sensor.PhoneStateSensor;
@@ -84,6 +86,12 @@ public class DataTaskFactory {
             task.setPeriodTime(1000);
             task.setSampleFrequency(-1.0f);
             break;
+        case BareAccelerometerSensor:
+            Sensor bSensor = new BareAccelerometerSensor(context);
+            if (task.getSampleFrequency() > 0)
+                bSensor.setSampleFrequency(task.getSampleFrequency());
+            dataTask = new DataSource(bSensor);
+            break;
         case TimerSensor:
             long period = task.getLong("period", 1000);
             TimerSensor ts = new TimerSensor(context, period);
@@ -123,16 +131,26 @@ public class DataTaskFactory {
 //            dataTask = new DataSource(sensor_gs);
 //            task.setPeriodTime(frameTime_gs);
 //            task.setSampleFrequency(-1.0f);
-            dataTask = new DataSource(GyroscopeSensor.createGyroscope(context));
+            GyroscopeSensor gSensor = GyroscopeSensor.createGyroscope(context);
             if (task.getSampleFrequency() > 0){
-                dataTask.setSampleFrequency(task.getSampleFrequency());
+                gSensor.setSampleFrequency(task.getSampleFrequency());
             }
+            dataTask = new DataSource(gSensor);
+
             break;
         case OrientationSensor:
-            dataTask = new DataSource(new OrientationSensor(context));
+            OrientationSensor oSensor = new OrientationSensor(context);
             if (task.getSampleFrequency() > 0){
-                dataTask.setSampleFrequency(task.getSampleFrequency());
+                oSensor.setSampleFrequency(task.getSampleFrequency());
             }
+            dataTask = new DataSource(oSensor);
+            break;
+        case ImuSensor:
+            ImuSensor iSensor = new ImuSensor(context);
+            if (task.getSampleFrequency() > 0){
+                iSensor.setSampleFrequency(task.getSampleFrequency());
+            }
+            dataTask = new DataSource(iSensor);
             break;
         case CallSensor:
             dataTask = new DataSource(new CallSensor(context));

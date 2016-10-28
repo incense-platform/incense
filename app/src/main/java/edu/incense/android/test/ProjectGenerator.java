@@ -2027,7 +2027,10 @@ public class ProjectGenerator {
         session.setDurationMeasure("hours");
         // TaskList
         List<Task> tasks = new ArrayList<Task>();
+
         // Sensors
+        Task accelerometerTask = TaskGenerator.createBareAccelerometerSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(accelerometerTask);
 
         Task gyroscopeTask = TaskGenerator.createGyroscopeSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
         tasks.add(gyroscopeTask);
@@ -2035,15 +2038,20 @@ public class ProjectGenerator {
         Task orientationTask = TaskGenerator.createOrientationSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
         tasks.add(orientationTask);
 
-        Task gyrosSink = TaskGenerator.createDataSink(mapper, 60);
-        tasks.add(gyrosSink);
+        Task imuTask = TaskGenerator.createImuSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(imuTask);
+
+        Task globalSink = TaskGenerator.createDataSink(mapper, 60);
+        tasks.add(globalSink);
 
 //        Task orientSink = TaskGenerator.createDataSink(mapper, 60);
 //        tasks.add(orientSink);
 
         List<TaskRelation> relations = Arrays.asList(new TaskRelation[]{
-                new TaskRelation(gyroscopeTask.getName(), gyrosSink.getName()),
-                new TaskRelation(orientationTask.getName(), gyrosSink.getName())});
+                new TaskRelation(accelerometerTask.getName(), globalSink.getName()),
+                new TaskRelation(gyroscopeTask.getName(), globalSink.getName()),
+                new TaskRelation(orientationTask.getName(), globalSink.getName()),
+                new TaskRelation(imuTask.getName(), globalSink.getName())});
 
         session.setTasks(tasks);
         session.setRelations(relations);

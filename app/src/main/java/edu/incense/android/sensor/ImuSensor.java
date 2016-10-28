@@ -1,36 +1,40 @@
 package edu.incense.android.sensor;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.lang.Math;
-
 import android.content.Context;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.hardware.Sensor;
 import android.util.Log;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.lang.Math;
+
 import edu.incense.android.datatask.data.Data;
+import edu.incense.android.datatask.data.ImuData;
 import edu.incense.android.datatask.data.OrientationData;
 
 /**
- * Created by xilef on 10/26/2016.
+ * Created by xilef on 10/28/2016.
  */
-public class OrientationSensor extends edu.incense.android.sensor.Sensor
+public class ImuSensor extends Sensor
     implements SensorEventListener
 {
-    private static final String TAG = "OrientationSensor";
+    private static final String TAG = "ImuSensor";
     private SensorManager sm; // This is used to retrieve instances of the sensors
     private android.hardware.Sensor magnetometer; // This is the variable that holds the sensor that's going to be used
     private android.hardware.Sensor accelerometer;
+    private android.hardware.Sensor gyroscope;
+    private android.hardware.Sensor orientation;
     private int sensorType; // Establishes the type of sensor that's going to be used.
 
     private int sampleRate; // The rate the sensor is going to offer data.
-    private Queue<OrientationData> sensedData;
+    private Queue<ImuData> sensedData;
 
     private float[] accelerometerReading = null;
     private float[] magnetometerReading = null;
+    private float[] gyroscopeReading = null;
+    private float[] orientationReading = null;
     private float[] rotationMatrix = new float[9];
     private float[] orientationAngles = new float[3];
 
@@ -38,16 +42,18 @@ public class OrientationSensor extends edu.incense.android.sensor.Sensor
      * Creates a new instance of the OrientationSensor class.
      * @param context: The context in which this class is being executed.
      */
-    public OrientationSensor(Context context){
+    public ImuSensor(Context context){
         super(context);
 
         this.setName(TAG);
         sampleRate = SensorManager.SENSOR_DELAY_NORMAL;
-        sensedData = new LinkedList<OrientationData>();
+        sensedData = new LinkedList<ImuData>();
 
         sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         magnetometer = sm.getDefaultSensor(android.hardware.Sensor.TYPE_MAGNETIC_FIELD);
         accelerometer = sm.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER);
+        gyroscope = sm.getDefaultSensor(android.hardware.Sensor.TYPE_GYROSCOPE);
+        //orientation = sm.getDefaultSensor(android.hardware.Sensor.TYPE_ORIENTATION);
         Log.d(TAG, "Sensor initialized: " + this.getName());
     }
 
@@ -96,7 +102,9 @@ public class OrientationSensor extends edu.incense.android.sensor.Sensor
     private boolean registerSensor(){
         boolean successMag = sm.registerListener(this, magnetometer, this.sampleRate);
         boolean successAccel = sm.registerListener(this, accelerometer, this.sampleRate);
-        if (successMag && successAccel){
+        boolean successGyro = sm.registerListener(this, gyroscope, this.sampleRate);
+        //boolean successOrient = sm.registerListener(this, orientation, this.sampleRate);
+        if (successMag && successAccel && successGyro){
             sensingNotification.updateNotificationWith(getName());
             Log.d(TAG, "SensingNotification updated");
             super.setSensing(true);
@@ -106,7 +114,7 @@ public class OrientationSensor extends edu.incense.android.sensor.Sensor
             super.setSensing(false);
             Log.d(TAG, "SensorEventLister NOT registered!");
         }
-        return successMag && successAccel;
+        return successMag && successAccel && successGyro;
     }
 
     /**
@@ -115,6 +123,8 @@ public class OrientationSensor extends edu.incense.android.sensor.Sensor
     private void unregisterSensor(){
         sm.unregisterListener(this, magnetometer);
         sm.unregisterListener(this, accelerometer);
+        sm.unregisterListener(this, gyroscope);
+        //sm.unregisterListener(this, orientation);
         super.setSensing(false);
         Log.d(TAG, "SensorEventLister unregistered!");
     }
@@ -163,28 +173,57 @@ public class OrientationSensor extends edu.incense.android.sensor.Sensor
      */
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
+        if (event.sensor.getType() == android.hardware.Sensor.TYPE_MAGNETIC_FIELD){
             magnetometerReading = new float[3];
             System.arraycopy(event.values, 0, magnetometerReading, 0, magnetometerReading.length);
         }
 
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+        if (event.sensor.getType() == android.hardware.Sensor.TYPE_ACCELEROMETER){
             accelerometerReading = new float[3];
             System.arraycopy(event.values, 0, accelerometerReading, 0, accelerometerReading.length);
         }
 
-        if (magnetometerReading != null && accelerometerReading != null){
+        if (event.sensor.getType() == android.hardware.Sensor.TYPE_GYROSCOPE){
+            gyroscopeReading = new float[3];
+            System.arraycopy(event.values, 0, gyroscopeReading, 0, gyroscopeReading.length);
+        }
+
+//        if (event.sensor.getType() == android.hardware.Sensor.TYPE_ORIENTATION){
+//            orientationReading = new float[3];
+//            System.arraycopy(event.values, 0, orientationReading, 0, orientationReading.length);
+//        }
+
+//        if (gyroscopeReading != null && accelerometerReading != null && orientationReading != null){
+//            ImuData imu = new ImuData(accelerometerReading[0], accelerometerReading[1], accelerometerReading[2],
+//                        gyroscopeReading[0], gyroscopeReading[1], gyroscopeReading[2],
+//                        orientationReading[1], orientationReading[2], orientationReading[0]);
+//
+//                sensedData.add(imu);
+//
+//            magnetometerReading = null;
+//            accelerometerReading = null;
+//            orientationReading = null;
+//
+//        }
+
+        if (magnetometerReading != null && accelerometerReading != null) {
             sm.getRotationMatrix(rotationMatrix, null, accelerometerReading, magnetometerReading);
             sm.getOrientation(rotationMatrix, orientationAngles);
 
-            OrientationData od = new OrientationData((float)Math.toDegrees(orientationAngles[1]),
-                    (float)Math.toDegrees(orientationAngles[2]),
-                    (float)Math.toDegrees(orientationAngles[0]));
+            if (gyroscopeReading != null){
+                ImuData imu = new ImuData(accelerometerReading[0], accelerometerReading[1], accelerometerReading[2],
+                        gyroscopeReading[0], gyroscopeReading[1], gyroscopeReading[2],
+                        (float)Math.toDegrees(orientationAngles[1]), (float)Math.toDegrees(orientationAngles[2]), (float)Math.toDegrees(orientationAngles[0]));
 
-            sensedData.add(od);
+                sensedData.add(imu);
 
-            magnetometerReading = null;
-            accelerometerReading = null;
+                magnetometerReading = null;
+                accelerometerReading = null;
+                gyroscopeReading = null;
+            }
+
+            rotationMatrix = new float[9];
+            orientationAngles = new float[3];
         }
     }
 }
