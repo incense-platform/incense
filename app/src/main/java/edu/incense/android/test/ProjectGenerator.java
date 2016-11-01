@@ -2065,6 +2065,65 @@ public class ProjectGenerator {
 
     }
 
+    public static void buildProjectJsonNutrition(Context context){
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Session
+        Session session = new Session();
+        session.setDurationUnits(24L * 100L); // 10days
+        session.setDurationMeasure("hours");
+        // TaskList
+        List<Task> tasks = new ArrayList<Task>();
+
+        // Sensors
+        Task accelerometerTask = TaskGenerator.createBareAccelerometerSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(accelerometerTask);
+
+        Task gyroscopeTask = TaskGenerator.createGyroscopeSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(gyroscopeTask);
+
+        Task orientationTask = TaskGenerator.createOrientationSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(orientationTask);
+
+        Task imuTask = TaskGenerator.createImuSensor(mapper, SensorManager.SENSOR_DELAY_NORMAL);
+        tasks.add(imuTask);
+
+        Task screenTask = TaskGenerator.createScreenSensor(mapper, 1);
+        tasks.add(screenTask);
+
+        Task batteryStateTask = TaskGenerator.createBatteryStateSensor(mapper, 1);
+        tasks.add(batteryStateTask);
+
+        Task batteryLevelTask = TaskGenerator.createBatteryLevelSensor(mapper, 1);
+        tasks.add(batteryLevelTask);
+
+        Task globalSink = TaskGenerator.createDataSink(mapper, 60);
+        tasks.add(globalSink);
+
+//        Task orientSink = TaskGenerator.createDataSink(mapper, 60);
+//        tasks.add(orientSink);
+
+        List<TaskRelation> relations = Arrays.asList(new TaskRelation[]{
+                new TaskRelation(accelerometerTask.getName(), globalSink.getName()),
+                new TaskRelation(gyroscopeTask.getName(), globalSink.getName()),
+                new TaskRelation(orientationTask.getName(), globalSink.getName()),
+                new TaskRelation(imuTask.getName(), globalSink.getName()),
+                new TaskRelation(screenTask.getName(), globalSink.getName()),
+                new TaskRelation(batteryStateTask.getName(), globalSink.getName()),
+                new TaskRelation(batteryLevelTask.getName(), globalSink.getName())});
+
+        session.setTasks(tasks);
+        session.setRelations(relations);
+        //Project
+        Project project = new Project();
+        project.setSessionsSize(1);
+        project.put("mainSession", session);
+        project.setSurveysSize(0);
+
+        writeProject(context, mapper, project);
+
+    }
+
     public static void buildProjectJsonEvalStudents(Context context) {
         ObjectMapper mapper = new ObjectMapper();
 

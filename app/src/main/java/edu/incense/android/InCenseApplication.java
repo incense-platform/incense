@@ -47,7 +47,7 @@ public class InCenseApplication extends Application {
     public final void onCreate() {
         super.onCreate();
         //ProjectGenerator.buildProjectJsonP(this);
-        ProjectGenerator.buildProjectJsonEvalAccel(this);
+        ProjectGenerator.buildProjectJsonNutrition(this);
         Log.i(getClass().getName(), "Project.json saved");
 //        singleton = this;
         taskCollection = new HashMap<String, DataTask>();
